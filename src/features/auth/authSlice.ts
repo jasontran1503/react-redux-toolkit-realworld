@@ -14,7 +14,14 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
+      state.isLoading = false;
+      state.error = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       // Login
@@ -50,7 +57,7 @@ const authSlice = createSlice({
         state.user = null;
         state.error = action.payload as GenericError;
       })
-      
+
       // Get current user
       .addCase(authThunk.getCurrentUser.pending, (state) => {
         state.isLoading = true;
@@ -59,7 +66,7 @@ const authSlice = createSlice({
         if (action.payload) {
           state.isAuthenticated = true;
           state.isLoading = false;
-          state.user = action.payload.data.user;
+          state.user = action.payload.user;
         }
       })
       .addCase(authThunk.getCurrentUser.rejected, (state, action) => {
@@ -67,6 +74,14 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.user = null;
         state.error = action.payload as GenericError;
+      })
+
+      // Update current user
+      .addCase(authThunk.updateCurrentUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload.user;
+        state.error = null;
       });
   }
 });

@@ -1,7 +1,7 @@
 import AxiosClient from 'app/axiosClient';
 import { removeLocalStorage, setLocalStorage } from 'common/logic/storage';
 import { setToken } from 'common/logic/token';
-import { UserResponse } from './authModel';
+import { UpdateUserRequest, UserResponse } from './authModel';
 
 const login = (email: string, password: string) => {
   return AxiosClient.post<UserResponse>('users/login', {
@@ -34,11 +34,13 @@ const getCurrentUser = () => {
   return AxiosClient.get<UserResponse>('user');
 };
 
-const logout = () => {
-  removeLocalStorage('api_token');
+const updateCurrentUser = (updateUserRequest: UpdateUserRequest) => {
+  return AxiosClient.put<UserResponse>('user', {
+    updateUserRequest
+  });
 };
 
-const updateCurrentUser = () => {
+const logout = () => {
   removeLocalStorage('api_token');
 };
 

@@ -7,7 +7,7 @@ import Loading from './Loading';
 const Auth = React.lazy(() => import('../../features/auth/Auth'));
 const Home = React.lazy(() => import('../../features/home/Home'));
 const Editor = React.lazy(() => import('../../features/editor/Editor'));
-const Settings = React.lazy(() => import('../../features/settings/Settings'));
+const Settings = React.lazy(() => import('../../features/auth/components/Settings'));
 const Profile = React.lazy(() => import('../../features/profile/Profile'));
 
 const MainLayout = () => {

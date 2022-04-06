@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import authApi from './authApi';
-import { LoginUser, NewUser } from './authModel';
+import { LoginUser, NewUser, UpdateUser } from './authModel';
 
 const login = createAsyncThunk('auth/login', async (loginUser: LoginUser, { rejectWithValue }) => {
   try {
@@ -26,18 +26,29 @@ const register = createAsyncThunk(
 const getCurrentUser = createAsyncThunk('auth/getCurrentUser', async (_, { rejectWithValue }) => {
   try {
     const response = await authApi.getCurrentUser();
-    return response;
+    return response.data;
   } catch (error) {
     return rejectWithValue(error);
   }
 });
 
+const updateCurrentUser = createAsyncThunk(
+  'auth/updateCurrentUser',
+  async (user: UpdateUser, { rejectWithValue }) => {
+    try {
+      const response = await authApi.updateCurrentUser({ user });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const authThunk = {
   login,
   register,
-  getCurrentUser
-  // logout,
-  // updateCurrentUser
+  getCurrentUser,
+  updateCurrentUser
 };
 
 export default authThunk;

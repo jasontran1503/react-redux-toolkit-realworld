@@ -19,6 +19,18 @@ export interface NewUserRequest {
   user: NewUser;
 }
 
+export interface UpdateUser {
+  email: string;
+  password: string;
+  username: string;
+  bio: string;
+  image: string;
+}
+
+export interface UpdateUserRequest {
+  user: UpdateUser;
+}
+
 export interface User {
   bio: string;
   email: string;
