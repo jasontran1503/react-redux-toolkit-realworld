@@ -1,6 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
-import { AuthState, LoginSuccessResponse } from './authModel';
+import { GenericError } from 'appModels';
+import { AuthState } from './authModel';
+import authThunk from './authThunk';
 
 const initialState: AuthState = {
   isAuthenticated: false,
@@ -12,33 +14,60 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    loginStarted(state: AuthState) {
-      const newState: AuthState = {
-        ...state,
-        isLoading: true
-      };
-      return newState;
-    },
-    loginSuccess(state: AuthState, action: PayloadAction<LoginSuccessResponse>) {
-      const newState: AuthState = {
-        ...state,
-        isAuthenticated: true,
-        isLoading: false,
-        user: action.payload.user
-      };
-      return newState;
-    },
-    loginFail(state: AuthState, action: PayloadAction<any>) {
-      console.log(action);
-      const newState: AuthState = {
-        ...state,
-        isLoading: false,
-        isAuthenticated: false,
-        error: action.payload
-      };
-      return newState;
-    }
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      // Login
+      .addCase(authThunk.login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authThunk.login.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.isAuthenticated = true;
+          state.isLoading = false;
+          state.user = action.payload.user;
+        }
+      })
+      .addCase(authThunk.login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as GenericError;
+      })
+
+      // Register
+      .addCase(authThunk.register.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authThunk.register.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.isAuthenticated = true;
+          state.isLoading = false;
+          state.user = action.payload.user;
+        }
+      })
+      .addCase(authThunk.register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = false;
+        state.user = null;
+        state.error = action.payload as GenericError;
+      })
+      
+      // Get current user
+      .addCase(authThunk.getCurrentUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authThunk.getCurrentUser.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.isAuthenticated = true;
+          state.isLoading = false;
+          state.user = action.payload.data.user;
+        }
+      })
+      .addCase(authThunk.getCurrentUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = false;
+        state.user = null;
+        state.error = action.payload as GenericError;
+      });
   }
 });
 
@@ -46,8 +75,8 @@ export const authActions = authSlice.actions;
 
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
 export const selectUser = (state: RootState) => state.auth.user;
-export const selectToken = (state: RootState) => state.auth.user?.token;
-export const selectError = (state: RootState) => state.auth.error;
+export const selectLoading = (state: RootState) => state.auth.isLoading;
+export const selectErrors = (state: RootState) => state.auth.error?.errors;
 
 const authReducer = authSlice.reducer;
 export default authReducer;

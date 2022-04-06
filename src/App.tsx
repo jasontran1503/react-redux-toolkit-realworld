@@ -1,3 +1,4 @@
+import Loading from 'common/layouts/Loading';
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import './App.css';
@@ -10,7 +11,7 @@ const App = () => {
     {
       path: '/*',
       element: (
-        <React.Suspense fallback={<div>Loading... </div>}>
+        <React.Suspense fallback={<Loading />}>
           <MainLayout />
         </React.Suspense>
       )
@@ -18,7 +19,7 @@ const App = () => {
     {
       path: '*',
       element: (
-        <React.Suspense fallback={<div>Loading... </div>}>
+        <React.Suspense fallback={<Loading />}>
           <NotFound />
         </React.Suspense>
       )

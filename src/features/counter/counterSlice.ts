@@ -43,6 +43,7 @@ export const counterSlice = createSlice({
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
     incrementByAmount: (state, action: PayloadAction<number>) => {
+      console.log(action.payload)
       state.value += action.payload;
     },
   },
@@ -54,6 +55,7 @@ export const counterSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(incrementAsync.fulfilled, (state, action) => {
+        console.log(action.payload)
         state.status = 'idle';
         state.value += action.payload;
       });

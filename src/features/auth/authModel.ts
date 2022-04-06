@@ -1,6 +1,22 @@
-export interface LoginParams {
+import { GenericError } from 'appModels';
+
+export interface LoginUser {
   email: string;
   password: string;
+}
+
+export interface LoginUserRequest {
+  user: LoginUser;
+}
+
+export interface NewUser {
+  email: string;
+  password: string;
+  username: string;
+}
+
+export interface NewUserRequest {
+  user: NewUser;
 }
 
 export interface User {
@@ -11,7 +27,7 @@ export interface User {
   username: string;
 }
 
-export interface LoginSuccessResponse {
+export interface UserResponse {
   user: User;
 }
 
@@ -23,10 +39,5 @@ export interface AuthState {
   isAuthenticated: boolean;
   user: User | null;
   isLoading: boolean;
-  error: any | null;
+  error: GenericError | null;
 }
-
-// export interface AuthAction {
-//   type: string;
-//   payload?: any;
-// }

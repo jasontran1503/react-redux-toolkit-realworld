@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, useRoutes } from 'react-router-dom';
 import Footer from './Footer';
 import Header from './Header';
+import Loading from './Loading';
 
 const Auth = React.lazy(() => import('../../features/auth/Auth'));
 const Home = React.lazy(() => import('../../features/home/Home'));
@@ -14,7 +15,7 @@ const MainLayout = () => {
     {
       path: 'auth/*',
       element: (
-        <React.Suspense fallback={<div>Loading... </div>}>
+        <React.Suspense fallback={<Loading />}>
           <Auth />
         </React.Suspense>
       )
@@ -22,7 +23,7 @@ const MainLayout = () => {
     {
       path: '/*',
       element: (
-        <React.Suspense fallback={<div>Loading... </div>}>
+        <React.Suspense fallback={<Loading />}>
           <Home />
         </React.Suspense>
       )
@@ -30,7 +31,7 @@ const MainLayout = () => {
     {
       path: 'editor',
       element: (
-        <React.Suspense fallback={<div>Loading... </div>}>
+        <React.Suspense fallback={<Loading />}>
           <Editor />
         </React.Suspense>
       )
@@ -38,7 +39,7 @@ const MainLayout = () => {
     {
       path: 'settings',
       element: (
-        <React.Suspense fallback={<div>Loading... </div>}>
+        <React.Suspense fallback={<Loading />}>
           <Settings />
         </React.Suspense>
       )
@@ -46,7 +47,7 @@ const MainLayout = () => {
     {
       path: 'profile',
       element: (
-        <React.Suspense fallback={<div>Loading... </div>}>
+        <React.Suspense fallback={<Loading />}>
           <Profile />
         </React.Suspense>
       )

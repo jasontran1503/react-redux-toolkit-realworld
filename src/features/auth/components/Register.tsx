@@ -1,17 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import '../Auth.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-
-interface RegisterParams {
-  username: string;
-  email: string;
-  password: string;
-}
+import { NewUser } from '../authModel';
+import authThunk from '../authThunk';
+import { useAppDispatch } from 'app/hooks';
 
 const Register = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const validation = yup.object().shape({
     username: yup.string().required('Username is required').min(6, 'Username min length is 6'),
     email: yup.string().required('Email is required').email('Email invalidate'),
@@ -23,14 +23,15 @@ const Register = () => {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<RegisterParams>({
+  } = useForm<NewUser>({
     mode: 'onTouched',
     resolver: yupResolver(validation)
   });
 
-  const onSubmit = (data: RegisterParams) => {
-    console.log(data);
+  const onSubmit = async (data: NewUser) => {
+    await dispatch(authThunk.register(data)).unwrap();
     reset();
+    navigate('/');
   };
 
   return (
