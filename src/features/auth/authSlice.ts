@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
 import { GenericError } from 'appModels';
+import authApi from './authApi';
 import { AuthState } from './authModel';
 import authThunk from './authThunk';
 
@@ -16,6 +17,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
+      authApi.logout();
       state.isAuthenticated = false;
       state.user = null;
       state.isLoading = false;

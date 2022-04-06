@@ -1,6 +1,5 @@
 import { useAppDispatch } from 'app/hooks';
 import { useCheckAuth } from 'common/hooks/useCheckAuth';
-import { removeLocalStorage } from 'common/logic/storage';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +24,6 @@ const Settings = () => {
   };
 
   const logout = () => {
-    removeLocalStorage('api_token');
     dispatch(authActions.logout());
     navigate('/');
   };
