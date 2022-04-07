@@ -1,13 +1,13 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-const AxiosClient = axios.create({
+const axiosClient = axios.create({
   baseURL: 'https://conduit.productionready.io/api/',
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
-AxiosClient.interceptors.request.use(
+axiosClient.interceptors.request.use(
   function (config: AxiosRequestConfig) {
     return config;
   },
@@ -16,7 +16,7 @@ AxiosClient.interceptors.request.use(
   }
 );
 
-AxiosClient.interceptors.response.use(
+axiosClient.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
   },
@@ -34,4 +34,4 @@ AxiosClient.interceptors.response.use(
   }
 );
 
-export default AxiosClient;
+export default axiosClient;

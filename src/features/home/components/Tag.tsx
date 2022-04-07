@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Tag = () => {
+const Tag = ({ tag }: { tag: string }) => {
   return (
-    <div className="tag tag-pill tag-default">
-      programming
+    <div style={{ cursor: 'pointer' }} className="tag-pill tag-default">
+      {tag}
     </div>
   );
 };

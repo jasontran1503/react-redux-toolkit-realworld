@@ -1,6 +1,7 @@
 import { selectUser } from 'features/auth/authSlice';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import articleApi from './articleApi';
 import ArticleDetail from './components/ArticleDetail';
 import ArticlePreview from './components/ArticlePreview';
 import Tag from './components/Tag';
@@ -8,6 +9,16 @@ import './Home.css';
 
 const Home = () => {
   const user = useSelector(selectUser);
+  const [tags, setTags] = useState<string[]>([]);
+
+  useEffect(() => {
+    const getTags = async () => {
+      const response = await articleApi.getTags();
+      setTags(response.data.tags);
+    };
+
+    getTags();
+  }, []);
 
   return (
     // <ArticleDetail />
@@ -43,11 +54,9 @@ const Home = () => {
               <p>Popular Tags</p>
 
               <div className="tag-list">
-                <Tag />
-                <Tag />
-                <Tag />
-                <Tag />
-                <Tag />
+                {tags.map((tag: string, index) => (
+                  <Tag key={index} tag={tag} />
+                ))}
               </div>
             </div>
           </div>

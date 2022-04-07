@@ -1,9 +1,9 @@
-import AxiosClient from 'app/axiosClient';
+import axiosClient from 'app/axiosClient';
 
 export function setToken(token: string | null) {
   if (token) {
-    AxiosClient.defaults.headers.common['Authorization'] = `Token ${token}`;
+    axiosClient.defaults.headers.common['Authorization'] = `Token ${token}`;
   } else {
-    delete AxiosClient.defaults.headers.common['Authorization'];
+    delete axiosClient.defaults.headers.common['Authorization'];
   }
 }
