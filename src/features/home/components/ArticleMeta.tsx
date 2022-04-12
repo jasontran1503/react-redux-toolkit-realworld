@@ -1,12 +1,13 @@
 import React from 'react';
+import { Article } from '../articleModel';
 import ArticleInfo from './ArticleInfo';
 
-const ArticleMeta = () => {
+const ArticleMeta = ({ article }: { article: Article }) => {
   return (
     <div className="article-meta">
-      <ArticleInfo />
+      <ArticleInfo article={article} />
       <button className="btn btn-outline-primary btn-sm pull-xs-right">
-        <i className="ion-heart"></i> 32
+        <i className="ion-heart"></i> {article.favoritesCount}
       </button>
     </div>
   );

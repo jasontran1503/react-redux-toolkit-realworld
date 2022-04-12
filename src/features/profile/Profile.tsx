@@ -1,4 +1,4 @@
-import ArticlePreview from 'features/home/components/ArticlePreview';
+// import ArticlePreview from 'features/home/components/ArticlePreview';
 import React from 'react';
 
 const Profile = () => {
@@ -41,9 +41,9 @@ const Profile = () => {
               </ul>
             </div>
 
-            <ArticlePreview />
+            {/* <ArticlePreview />
 
-            <ArticlePreview />
+            <ArticlePreview /> */}
           </div>
         </div>
       </div>

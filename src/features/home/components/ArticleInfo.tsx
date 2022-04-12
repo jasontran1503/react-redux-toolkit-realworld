@@ -1,16 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Article } from '../articleModel';
 
-const ArticleInfo = () => {
+const ArticleInfo = ({ article }: { article: Article }) => {
   return (
     <>
-      <a href="profile.html">
-        <img src="http://i.imgur.com/N4VcUeJ.jpg" alt="" />
-      </a>
+      <Link to={`/profile/${article.author.username}`}>
+        <img src={article.author.image} alt={article.author.bio} />
+      </Link>
       <div className="info">
-        <a href="profile.html" className="author">
-          Albert Pai
-        </a>
-        <span className="date">January 20th</span>
+        <Link to={`/profile/${article.author.username}`} className="author">
+          {article.author.username}
+        </Link>
+        <span className="date">{article.createdAt}</span>
       </div>
     </>
   );

@@ -1,3 +1,4 @@
+import ArticleDetail from 'features/home/components/ArticleDetail';
 import React from 'react';
 import { Outlet, useRoutes } from 'react-router-dom';
 import Footer from './Footer';
@@ -21,10 +22,18 @@ const MainLayout = () => {
       )
     },
     {
-      path: '/*',
+      path: '/',
       element: (
         <React.Suspense fallback={<Loading />}>
           <Home />
+        </React.Suspense>
+      )
+    },
+    {
+      path: 'article/:slug',
+      element: (
+        <React.Suspense fallback={<Loading />}>
+          <ArticleDetail />
         </React.Suspense>
       )
     },
@@ -45,7 +54,7 @@ const MainLayout = () => {
       )
     },
     {
-      path: 'profile',
+      path: 'profile/*',
       element: (
         <React.Suspense fallback={<Loading />}>
           <Profile />
