@@ -49,7 +49,7 @@ export const articleListActions = articleListSlice.actions;
 
 export const selectArticles = (state: RootState) => state.articleList.articles;
 export const selectLoading = (state: RootState) => state.articleList.isLoading;
-// export const selectErrors = (state: RootState) => state.auth.error?.errors;
+// export const selectErrors = (state: RootState) => state.auth.error;
 
 const articleListReducer = articleListSlice.reducer;
 export default articleListReducer;

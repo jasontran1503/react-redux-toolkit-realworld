@@ -1,4 +1,5 @@
 import { selectUser } from 'features/auth/authSlice';
+import { Article } from 'features/home/articleModel';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import DeleteArticle from './DeleteArticle';
@@ -6,11 +7,11 @@ import EditArticle from './EditArticle';
 import FavoriteArticle from './FavoriteArticle';
 import FollowUser from './FollowUser';
 
-function ButtonGroup({ username }: { username: string }) {
+function ButtonGroup({ article }: { article: Article }) {
   const user = useSelector(selectUser);
   return (
     <>
-      {user?.username !== username ? (
+      {user?.username !== article.author.username ? (
         <>
           <FollowUser />
           &nbsp;&nbsp;
@@ -18,9 +19,9 @@ function ButtonGroup({ username }: { username: string }) {
         </>
       ) : (
         <>
-          <EditArticle />
+          <EditArticle slug={article.slug} />
           &nbsp;&nbsp;
-          <DeleteArticle />
+          <DeleteArticle slug={article.slug} />
         </>
       )}
     </>

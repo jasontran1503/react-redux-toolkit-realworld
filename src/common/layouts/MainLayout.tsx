@@ -43,7 +43,8 @@ const MainLayout = () => {
         <React.Suspense fallback={<Loading />}>
           <Editor />
         </React.Suspense>
-      )
+      ),
+      children: [{ path: ':slug', element: <Editor /> }]
     },
     {
       path: 'settings',

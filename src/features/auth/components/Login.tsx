@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch } from 'app/hooks';
+import { useErrors } from 'common/hooks/useErrors';
 import Loading from 'common/layouts/Loading';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,13 +9,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import '../Auth.css';
 import { LoginUser } from '../authModel';
-import { selectLoading } from '../authSlice';
+import { selectAuthErrors, selectLoading } from '../authSlice';
 import authThunk from '../authThunk';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = useSelector(selectLoading);
+  const loginError = useSelector(selectAuthErrors);
+  const errorText = useErrors(loginError);
 
   const validation = yup.object().shape({
     email: yup.string().required('Email is required').email('Email invalidate'),
@@ -50,9 +53,13 @@ const Login = () => {
                 <Link to="/auth/register">Need an account?</Link>
               </p>
 
-              <ul className="invalid-text">
-                <li>That email is already taken</li>
-              </ul>
+              {errorText && errorText.length > 0 && (
+                <ul className="invalid-text">
+                  {errorText.map((text) => (
+                    <li key={text}>{text}</li>
+                  ))}
+                </ul>
+              )}
 
               <form onSubmit={handleSubmit(onSubmit)}>
                 <fieldset className="form-group">

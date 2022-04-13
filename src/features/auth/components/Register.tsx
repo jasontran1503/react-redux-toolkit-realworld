@@ -1,16 +1,21 @@
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useAppDispatch } from 'app/hooks';
+import { useErrors } from 'common/hooks/useErrors';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import '../Auth.css';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import { NewUser } from '../authModel';
+import { selectAuthErrors } from '../authSlice';
 import authThunk from '../authThunk';
-import { useAppDispatch } from 'app/hooks';
 
 const Register = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const registerError = useSelector(selectAuthErrors);
+  const errorText = useErrors(registerError);
 
   const validation = yup.object().shape({
     username: yup.string().required('Username is required').min(6, 'Username min length is 6'),
@@ -43,9 +48,13 @@ const Register = () => {
             <Link to="/auth/login">Have an account?</Link>
           </p>
 
-          <ul className="invalid-text">
-            <li>That email is already taken</li>
-          </ul>
+          {errorText && errorText.length > 0 && (
+            <ul className="invalid-text">
+              {errorText.map((text) => (
+                <li key={text}>{text}</li>
+              ))}
+            </ul>
+          )}
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <fieldset className="form-group">

@@ -1,9 +1,13 @@
+import { useAppDispatch } from 'app/hooks';
 import { useGetCurrentUser } from 'common/hooks/useGetCurrentUser';
+import { authActions } from 'features/auth/authSlice';
+import { articleDetailActions } from 'features/home/slices/article-detail/articleDetailSlice';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
   const user = useGetCurrentUser();
+  const dispatch = useAppDispatch();
 
   return (
     <nav className="navbar navbar-light">
@@ -19,7 +23,7 @@ const Header = () => {
           </li>
           {user && (
             <>
-              <li className="nav-item">
+              <li className="nav-item" onClick={() => dispatch(articleDetailActions.clearErrors())}>
                 <Link className="nav-link" to="editor">
                   <i className="ion-compose"></i>&nbsp;New Article
                 </Link>
@@ -39,12 +43,12 @@ const Header = () => {
           )}
           {!user && (
             <>
-              <li className="nav-item">
+              <li className="nav-item" onClick={() => dispatch(authActions.clearErrors())}>
                 <Link className="nav-link" to="auth/login">
                   Sign in
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item" onClick={() => dispatch(authActions.clearErrors())}>
                 <Link className="nav-link" to="auth/register">
                   Sign up
                 </Link>

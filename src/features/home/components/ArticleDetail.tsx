@@ -34,7 +34,7 @@ const ArticleDetail = () => {
 
               <div className="article-meta">
                 <ArticleInfo article={article} />
-                <ButtonGroup username={article.author.username} />
+                <ButtonGroup article={article} />
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@ const ArticleDetail = () => {
             <div className="article-actions">
               <div className="article-meta">
                 <ArticleInfo article={article} />
-                <ButtonGroup username={article.author.username} />
+                <ButtonGroup article={article} />
               </div>
             </div>
             <div className="row">

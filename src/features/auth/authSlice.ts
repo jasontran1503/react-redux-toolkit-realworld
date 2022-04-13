@@ -22,6 +22,9 @@ const authSlice = createSlice({
       state.user = null;
       state.isLoading = false;
       state.error = null;
+    },
+    clearErrors: (state) => {
+      state.error = null;
     }
   },
   extraReducers: (builder) => {
@@ -93,7 +96,7 @@ export const authActions = authSlice.actions;
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectLoading = (state: RootState) => state.auth.isLoading;
-export const selectErrors = (state: RootState) => state.auth.error?.errors;
+export const selectAuthErrors = (state: RootState) => state.auth.error;
 
 const authReducer = authSlice.reducer;
 export default authReducer;
