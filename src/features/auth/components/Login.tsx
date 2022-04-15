@@ -2,20 +2,21 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch } from 'app/hooks';
 import { useErrors } from 'common/hooks/useErrors';
 import Loading from 'common/layouts/Loading';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import '../Auth.css';
 import { LoginUser } from '../authModel';
-import { selectAuthErrors, selectLoading } from '../authSlice';
+import { selectAuthErrors, selectIsAuthenticated, selectLoading } from '../authSlice';
 import authThunk from '../authThunk';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = useSelector(selectLoading);
+  const isAuth = useSelector(selectIsAuthenticated);
   const loginError = useSelector(selectAuthErrors);
   const errorText = useErrors(loginError);
 
@@ -39,6 +40,12 @@ const Login = () => {
     reset();
     navigate('/');
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate('/');
+    }
+  }, [isAuth]);
 
   return (
     <>
