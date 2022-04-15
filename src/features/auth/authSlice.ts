@@ -25,6 +25,23 @@ const authSlice = createSlice({
     },
     clearErrors: (state) => {
       state.error = null;
+    },
+
+    // Login
+    loginBegin: (state, action) => {
+      state.isLoading = true;
+    },
+    loginSuccess: (state, action) => {
+      console.log(action)
+      if (action.payload) {
+        state.isAuthenticated = true;
+        state.isLoading = false;
+        state.user = action.payload.user;
+      }
+    },
+    loginFail: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload as GenericError;
     }
   },
   extraReducers: (builder) => {
